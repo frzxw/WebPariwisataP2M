@@ -12,3 +12,7 @@ Route::get('/admin/dashboard', function () {
 Route::get('/admin/transaction', function () {
     return view('admin.transaction.index');
 });
+
+Route::get('/transaction', function () {
+    return view('transaction');
+});
