@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layouts.admin')
 
 @section('title', 'Transaksi')
 @section('content')
@@ -93,7 +93,7 @@
                 <div class="bg-white px-4 py-6 md:col-span-3 rounded-2xl shadow-xl">
                     <p class="font-medium">Transaksi</p>
 
-                    <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6 min-h-[230px]">
+                    <div class="w-full bg-white rounded-lg shadow-sm p-4 md:p-6 min-h-[230px]">
                         <div id="line-chart"></div>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
                         show: true,
                         style: {
                             fontFamily: "Poppins, sans-serif",
-                            cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                            cssClass: 'text-xs font-normal fill-gray-500 '
                         }
                     },
                     axisBorder: {
@@ -192,7 +192,7 @@
                         show: true,
                         style: {
                             fontFamily: "Poppins, sans-serif",
-                            cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                            cssClass: 'text-xs font-normal fill-gray-500 '
                         }
                     },
                     axisBorder: {

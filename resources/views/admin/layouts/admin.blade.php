@@ -14,7 +14,7 @@
 </head>
 
 <body class="bg-[#F4F4F4]">
-    @include('layouts.partials.admin_sidebar')
+    @include('admin.layouts.partials.admin_sidebar')
 
     {{-- content --}}
     @yield('content')
