@@ -9,8 +9,8 @@
 
     <!-- Vite CSS & JS Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @push('styles')
-    @endpush
+
+    @stack('styles')
 </head>
 
 <body class="bg-[#F4F4F4]">
@@ -19,8 +19,7 @@
     {{-- content --}}
     @yield('content')
 
-    @push('scripts')
-    @endpush
+    @stack('scripts')
 </body>
 
 </html>

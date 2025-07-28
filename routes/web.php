@@ -9,6 +9,13 @@ Route::get('/admin/login', function () {
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');
-Route::get('/admin/transaction', function () {
-    return view('admin.transaction.index');
+Route::get('/admin/transactions', function () {
+    return view('admin.transactions.index');
 });
+Route::get('/admin/users', function () {
+    return view('admin.users.index');
+});
+Route::get('/admin/items', function () {
+    return view('admin.items.index');
+});
+// temporary routes

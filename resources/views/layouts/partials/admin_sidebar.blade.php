@@ -19,7 +19,7 @@
                 <ul class="space-y-2 font-poppins font-medium">
                     <li>
                         <a href="/admin/dashboard"
-                            class="flex items-center p-2 text-darkGreen rounded-lg hover:bg-whiteGreen group ">
+                            class="flex items-center p-2 text-darkGreen rounded-lg group {{ request()->is('admin/dashboard*') ? 'bg-[#f0f2ea]' : 'hover:bg-whiteGreen' }} ">
                             <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-darkGreen"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                 viewBox="0 0 22 21">
@@ -32,8 +32,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/admin/transaction"
-                            class="flex items-center p-2 text-darkGreen rounded-lg hover:bg-whiteGreen group">
+                        <a href="/admin/transactions"
+                            class="flex items-center p-2 text-darkGreen rounded-lg {{ request()->is('admin/transactions*') ? 'bg-[#f0f2ea]' : 'hover:bg-whiteGreen' }} group">
                             <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-darkGreen"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                 viewBox="0 0 18 20">
@@ -46,8 +46,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#"
-                            class="flex items-center p-2 text-darkGreen rounded-lg hover:bg-whiteGreen group">
+                        <a href="/admin/users"
+                            class="flex items-center p-2 text-darkGreen rounded-lg {{ request()->is('admin/users*') ? 'bg-[#f0f2ea]' : 'hover:bg-whiteGreen' }} group">
                             <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-darkGreen"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                 viewBox="0 0 20 18">
@@ -58,8 +58,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#"
-                            class="flex items-center p-2 text-darkGreen rounded-lg hover:bg-whiteGreen group">
+                        <a href="/admin/items"
+                            class="flex items-center p-2 text-darkGreen rounded-lg {{ request()->is('admin/items*') ? 'bg-[#f0f2ea]' : 'hover:bg-whiteGreen' }} group">
                             <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-darkGreen"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                 viewBox="0 0 18 18">
