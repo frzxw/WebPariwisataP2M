@@ -8,10 +8,11 @@
         margin-top: 4rem;
     }
 
-    .container {
+    .footer-container {
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 2rem;
+        display: block; /* Override any grid styles from other pages */
     }
 
     .footer-content {
@@ -128,7 +129,7 @@
 </style>
 
 <footer class="footer">
-    <div class="container">
+    <div class="footer-container">
         <div class="footer-content">
             <div class="footer-section footer-logo">
                 <img src="{{ asset('images/admin/logo-upi.webp') }}" alt="UPI Logo">

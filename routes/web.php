@@ -16,3 +16,7 @@ Route::get('/admin/transaction', function () {
 Route::get('/transaction', function () {
     return view('transaction');
 });
+
+Route::get('/booking', function () {
+    return view('booking');
+});
