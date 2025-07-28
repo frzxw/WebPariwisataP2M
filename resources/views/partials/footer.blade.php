@@ -101,7 +101,7 @@
     }
 
     .footer-bottom {
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: 1px solid #304835;
         padding-top: 1rem;
         text-align: center;
         color: white;
