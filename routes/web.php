@@ -19,3 +19,14 @@ Route::get('/admin/items', function () {
     return view('admin.items.index');
 });
 // temporary routes
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/transaction', function () {
+    return view('transaction');
+});
+
+Route::get('/booking', function () {
+    return view('booking');
+});
