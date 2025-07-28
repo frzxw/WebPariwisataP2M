@@ -13,6 +13,10 @@ Route::get('/admin/transaction', function () {
     return view('admin.transaction.index');
 });
 
+Route::get('/about', function () {
+    return view('about');
+});
+
 Route::get('/transaction', function () {
     return view('transaction');
 });
