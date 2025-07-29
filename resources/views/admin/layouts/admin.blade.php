@@ -9,18 +9,17 @@
 
     <!-- Vite CSS & JS Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @push('styles')
-    @endpush
+
+    @stack('styles')
 </head>
 
 <body class="bg-[#F4F4F4]">
-    @include('layouts.partials.admin_sidebar')
+    @include('admin.layouts.partials.admin_sidebar')
 
     {{-- content --}}
     @yield('content')
 
-    @push('scripts')
-    @endpush
+    @stack('scripts')
 </body>
 
 </html>
