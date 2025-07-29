@@ -105,53 +105,24 @@
             position: relative;
             height: 300px;
             display: flex;
-            gap: 10px;
             overflow: hidden;
+            width: 100%;
+        }
+
+        .carousel-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            gap: 15px;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .carousel-slide {
-            position: relative;
-            flex: 1;
-            width: calc(50% - 5px);
+            flex: 0 0 calc(50% - 7.5px);
             height: 100%;
             background-size: cover;
             background-position: center;
-            opacity: 1;
-            transition: transform 0.5s ease-in-out, opacity 0.5s ease;
             border-radius: 10px;
-            transform: translateX(0);
-        }
-
-        .carousel-slide:not(.active):not(.active-second) {
-            display: none;
-        }
-
-        .carousel-slide.slide-out-left {
-            transform: translateX(-100%);
-            opacity: 0;
-        }
-
-        .carousel-slide.slide-out-right {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-
-        .carousel-slide.slide-in-right {
-            transform: translateX(100%);
-            opacity: 1;
-        }
-
-        .carousel-slide.slide-in-left {
-            transform: translateX(-100%);
-            opacity: 1;
-        }
-
-        .carousel-slide.slide-in-right.active,
-        .carousel-slide.slide-in-right.active-second,
-        .carousel-slide.slide-in-left.active,
-        .carousel-slide.slide-in-left.active-second {
-            transform: translateX(0);
-            opacity: 1;
         }
 
         .carousel-nav {
@@ -393,9 +364,11 @@
                 <h2 class="section-title">Djamudju Coffee & Camp</h2>
                 <div class="carousel-container">
                     <div class="carousel" data-carousel="carousel1">
-                        <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=869&q=80')"></div>
-                        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
-                        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1533873984035-25970ab07461?ixlib=rb-4.0.3&auto=format&fit=crop&w=869&q=80')"></div>
+                        <div class="carousel-track">
+                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=869&q=80')"></div>
+                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
+                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1533873984035-25970ab07461?ixlib=rb-4.0.3&auto=format&fit=crop&w=869&q=80')"></div>
+                        </div>
                         <button class="carousel-nav carousel-prev" onclick="prevSlide('carousel1')">‹</button>
                         <button class="carousel-nav carousel-next" onclick="nextSlide('carousel1')">›</button>
                     </div>
@@ -407,9 +380,12 @@
                 <h2 class="section-title">Kampung Stamplat Girang</h2>
                 <div class="carousel-container">
                     <div class="carousel" data-carousel="carousel2">
-                        <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
-                        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1487730116645-74489c95b41b?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
-                        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1533873984035-25970ab07461?ixlib=rb-4.0.3&auto=format&fit=crop&w=869&q=80')"></div>
+                        <div class="carousel-track">
+                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
+                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1487730116645-74489c95b41b?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
+                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1487730116645-74489c95b41b?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
+                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1533873984035-25970ab07461?ixlib=rb-4.0.3&auto=format&fit=crop&w=869&q=80')"></div>
+                        </div>
                         <button class="carousel-nav carousel-prev" onclick="prevSlide('carousel2')">‹</button>
                         <button class="carousel-nav carousel-next" onclick="nextSlide('carousel2')">›</button>
                     </div>
@@ -421,9 +397,11 @@
                 <h2 class="section-title">Camping Ground Ngampay</h2>
                 <div class="carousel-container">
                     <div class="carousel" data-carousel="carousel3">
-                        <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1537905569824-f89f14cceb68?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
-                        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=875&q=80')"></div>
-                        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1537905569824-f89f14cceb68?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
+                        <div class="carousel-track">
+                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1537905569824-f89f14cceb68?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
+                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=875&q=80')"></div>
+                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1537905569824-f89f14cceb68?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
+                        </div>
                         <button class="carousel-nav carousel-prev" onclick="prevSlide('carousel3')">‹</button>
                         <button class="carousel-nav carousel-next" onclick="nextSlide('carousel3')">›</button>
                     </div>
@@ -435,9 +413,10 @@
                 <h2 class="section-title">Coffee Forest Camp</h2>
                 <div class="carousel-container">
                     <div class="carousel" data-carousel="carousel4">
-                        <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1533873984035-25970ab07461?ixlib=rb-4.0.3&auto=format&fit=crop&w=869&q=80')"></div>
-                        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1571863533956-01c88e79957e?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
-                        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1533873984035-25970ab07461?ixlib=rb-4.0.3&auto=format&fit=crop&w=869&q=80')"></div>
+                        <div class="carousel-track">
+                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1533873984035-25970ab07461?ixlib=rb-4.0.3&auto=format&fit=crop&w=869&q=80')"></div>
+                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1571863533956-01c88e79957e?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80')"></div>
+                        </div>
                         <button class="carousel-nav carousel-prev" onclick="prevSlide('carousel4')">‹</button>
                         <button class="carousel-nav carousel-next" onclick="nextSlide('carousel4')">›</button>
                     </div>
@@ -492,7 +471,7 @@
     @include('partials.footer')
 
     <script>
-        // Carousel functionality - updated to match booking.blade.php style
+        // Carousel functionality - simplified infinite cycling
         let currentSlides = {
             'carousel1': 0,
             'carousel2': 0,
@@ -500,45 +479,55 @@
             'carousel4': 0
         };
 
-        function showSlide(carouselId, index, direction = 'next') {
+        // Store original slide counts to avoid DOM confusion
+        let originalSlideCounts = {};
+
+        function initializeCarousel(carouselId) {
             const carousel = document.querySelector(`[data-carousel="${carouselId}"]`);
             if (!carousel) return;
 
-            const slides = carousel.querySelectorAll('.carousel-slide');
+            const track = carousel.querySelector('.carousel-track');
+            const originalSlides = Array.from(carousel.querySelectorAll('.carousel-slide'));
 
-            // Calculate new slides to show
-            const newSlide1 = slides[index];
-            const newSlide2Index = (index + 1) % slides.length;
-            const newSlide2 = slides[newSlide2Index];
+            // Store the original count before we modify anything
+            originalSlideCounts[carouselId] = originalSlides.length;
 
-            // Remove all animation classes from all slides first
-            slides.forEach(slide => {
-                slide.classList.remove('active', 'active-second', 'slide-out-left', 'slide-out-right', 'slide-in-left', 'slide-in-right');
+            // Clear and rebuild track with duplicates for infinite scroll
+            track.innerHTML = '';
+
+            // For infinite scroll: [last] + [all originals] + [first, second]
+            // Add the last slide at the beginning (for smooth backwards infinite)
+            const lastSlide = originalSlides[originalSlides.length - 1].cloneNode(true);
+            track.appendChild(lastSlide);
+
+            // Add all original slides
+            originalSlides.forEach(slide => {
+                track.appendChild(slide.cloneNode(true));
             });
 
-            // Set up new slides for animation
-            if (direction === 'next') {
-                // Position new slides off-screen to the right
-                newSlide1.classList.add('slide-in-right');
-                newSlide2.classList.add('slide-in-right');
-            } else {
-                // Position new slides off-screen to the left
-                newSlide1.classList.add('slide-in-left');
-                newSlide2.classList.add('slide-in-left');
+            // Add first two slides at the end for smooth forward infinite
+            const duplicatesNeeded = Math.min(2, originalSlides.length);
+            for (let i = 0; i < duplicatesNeeded; i++) {
+                const duplicate = originalSlides[i].cloneNode(true);
+                track.appendChild(duplicate);
             }
 
-            // Make new slides visible and add active classes
-            newSlide1.classList.add('active');
-            newSlide2.classList.add('active-second');
+            // Initialize position to show first two original slides (skip the duplicate at start)
+            currentSlides[carouselId] = 0;
+            updateCarousel(carouselId);
+        }
 
-            // Force reflow
-            carousel.offsetHeight;
+        function updateCarousel(carouselId) {
+            const carousel = document.querySelector(`[data-carousel="${carouselId}"]`);
+            if (!carousel) return;
 
-            // Trigger the animation by removing positioning classes
-            setTimeout(() => {
-                newSlide1.classList.remove('slide-in-right', 'slide-in-left');
-                newSlide2.classList.remove('slide-in-right', 'slide-in-left');
-            }, 10);
+            const track = carousel.querySelector('.carousel-track');
+            const currentIndex = currentSlides[carouselId];
+
+            // Simple calculation: each slide takes 50% width (including gap)
+            // Position 0 shows slides 1,2 (skipping the duplicate at position 0)
+            const translateX = -((currentIndex + 1) * 50);
+            track.style.transform = `translateX(${translateX}%)`;
         }
 
         function nextSlide(carouselId) {
@@ -552,9 +541,28 @@
                 setTimeout(() => nextBtn.classList.remove('clicked'), 300);
             }
 
-            const slides = carousel.querySelectorAll('.carousel-slide');
-            currentSlides[carouselId] = (currentSlides[carouselId] + 1) % slides.length;
-            showSlide(carouselId, currentSlides[carouselId], 'next');
+            // Use stored original slide count
+            const originalSlideCount = originalSlideCounts[carouselId];
+
+            // Increment position
+            currentSlides[carouselId]++;
+
+            // Update position
+            updateCarousel(carouselId);
+
+            // Handle infinite loop reset
+            if (currentSlides[carouselId] >= originalSlideCount) {
+                setTimeout(() => {
+                    const track = carousel.querySelector('.carousel-track');
+                    track.style.transition = 'none';
+                    currentSlides[carouselId] = 0;
+                    updateCarousel(carouselId);
+
+                    setTimeout(() => {
+                        track.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    }, 50);
+                }, 600);
+            }
         }
 
         function prevSlide(carouselId) {
@@ -568,41 +576,32 @@
                 setTimeout(() => prevBtn.classList.remove('clicked'), 300);
             }
 
-            const slides = carousel.querySelectorAll('.carousel-slide');
-            currentSlides[carouselId] = (currentSlides[carouselId] - 1 + slides.length) % slides.length;
-            showSlide(carouselId, currentSlides[carouselId], 'prev');
+            const originalSlideCount = originalSlideCounts[carouselId];
+            const track = carousel.querySelector('.carousel-track');
+
+            // Handle going back from first position
+            if (currentSlides[carouselId] <= 0) {
+                // Jump to the last original slide position instantly
+                track.style.transition = 'none';
+                currentSlides[carouselId] = originalSlideCount;
+                updateCarousel(carouselId);
+
+                // Then animate to the previous slide
+                setTimeout(() => {
+                    track.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    currentSlides[carouselId] = originalSlideCount - 1;
+                    updateCarousel(carouselId);
+                }, 50);
+            } else {
+                currentSlides[carouselId]--;
+                updateCarousel(carouselId);
+            }
         }
 
-        // Remove auto-advance carousels - commented out
-        /*
-        setInterval(() => {
-            nextSlide('carousel1');
-        }, 4000);
-
-        setInterval(() => {
-            nextSlide('carousel2');
-        }, 4200);
-
-        setInterval(() => {
-            nextSlide('carousel3');
-        }, 4400);
-
-        setInterval(() => {
-            nextSlide('carousel4');
-        }, 4600);
-        */
-
-        // Initialize all carousels to show first two images
+        // Initialize all carousels
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize without animation for the first load
             ['carousel1', 'carousel2', 'carousel3', 'carousel4'].forEach(carouselId => {
-                const carousel = document.querySelector(`[data-carousel="${carouselId}"]`);
-                if (carousel) {
-                    const slides = carousel.querySelectorAll('.carousel-slide');
-                    slides.forEach(slide => slide.classList.remove('active', 'active-second'));
-                    slides[0].classList.add('active');
-                    slides[1].classList.add('active-second');
-                }
+                initializeCarousel(carouselId);
             });
         });
 

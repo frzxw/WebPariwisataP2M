@@ -18,14 +18,16 @@ Route::get('/admin/users', function () {
 Route::get('/admin/items', function () {
     return view('admin.items.index');
 });
+
+Route::get('/', function () {
+    return view('homepage');
+});
 Route::get('/about', function () {
     return view('about');
 });
-
 Route::get('/transaction', function () {
     return view('transaction');
 });
-
 Route::get('/booking', function () {
     return view('booking');
 });

@@ -165,9 +165,9 @@
             <div class="footer-section">
                 <h3>Contact Info</h3>
                 <ul>
-                    <li>📧 info@upinaturecamp.com</li>
-                    <li>📞 +62 123 456 789</li>
-                    <li>📍 Bandung, Jawa Barat</li>
+                    <li>info@upinaturecamp.com</li>
+                    <li>+62 123 456 789</li>
+                    <li>Bandung, Jawa Barat</li>
                 </ul>
             </div>
         </div>
