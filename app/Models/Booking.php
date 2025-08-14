@@ -63,19 +63,17 @@ class Booking extends Model
 
     public function facility()
     {
-        return $this->belongsTo(Facility::class);
+        return $this->belongsTo(CampingLocation::class, 'facility_id');
     }
 
     public function addons()
     {
-        return $this->belongsToMany(Addon::class, 'booking_addons')
-            ->withPivot('quantity', 'unit_price', 'total_price')
-            ->withTimestamps();
+        return $this->hasMany(BookingAddon::class);
     }
 
     public function paymentLogs()
     {
-        return $this->hasMany(PaymentLog::class);
+        return $this->hasMany(PaymentLog::class, 'plot_booking_id');
     }
 
     public function review()

@@ -106,20 +106,24 @@
             <img src="{{ asset('images/admin/logo-upi.webp') }}" alt="UPI Logo">
         </div>
         <ul class="nav-links">
-            <li><a href="{{ url('/') }}">Home</a></li>
+            <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a></li>
             <li><a href="{{ url('/about') }}" class="{{ request()->is('about') ? 'active' : '' }}">About Us</a></li>
             <li><a href="{{ url('/transaction') }}" class="{{ request()->is('transaction') ? 'active' : '' }}">Transaksi</a></li>
-            <li><a href="{{ url('/') }}">Akun</a></li>
+            <li><a href="{{ url('/account') }}" class="{{ request()->is('account') ? 'active' : '' }}">Akun</a></li>
             <li><a href="{{ url('/booking') }}" class="btn btn-primary reservasi-btn {{ request()->is('booking') ? 'active' : '' }}">Reservasi</a></li>
         </ul>
         <div class="auth-links">
-            @if (Route::has('login'))
+            @if (Route::has('web.login'))
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="btn btn-primary">Dashboard</a>
+                    <a href="{{ route('web.account') }}" class="btn btn-primary">Akun Saya</a>
                 @else
-                    <a href="{{ url('/admin/login') }}" class="btn btn-outline">Masuk</a>
-                    @if (Route::has('register'))
-                        <a href="{{ url('/booking') }}" class="btn btn-primary">Reservasi</a>
+                    @unless(request()->is('login'))
+                        <a href="{{ route('web.login') }}" class="btn btn-outline">Masuk</a>
+                    @endunless
+                    @if (Route::has('web.register'))
+                        @unless(request()->is('register'))
+                            <a href="{{ route('web.register') }}" class="btn btn-primary">Daftar</a>
+                        @endunless
                     @endif
                 @endauth
             @endif

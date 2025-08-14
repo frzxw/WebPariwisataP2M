@@ -432,37 +432,37 @@
             <div class="container">
                 <h2 class="section-title">Lokasi Kami</h2>
                 <div class="location-grid">
-                    <div class="location-item">
-                        <div class="location-icon">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.798!2d107.6191!3d-6.9175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNTUnMDMuMCJTIDEwN8KwMzcnMDguOCJF!5e0!3m2!1sen!2sid!4v1234567890123!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    @forelse($featuredLocations as $location)
+                        <div class="location-item">
+                            <div class="location-icon">
+                                @if($location->images && $location->images->first())
+                                    <img src="{{ asset('storage/' . $location->images->first()->image_path) }}" 
+                                         alt="{{ $location->name }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+                                @else
+                                    <div style="width: 100%; height: 200px; background: #f0f0f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #666;">
+                                        Tidak ada gambar
+                                    </div>
+                                @endif
+                            </div>
+                            <h3>{{ $location->name }}</h3>
+                            <p>{{ Str::limit($location->description, 100) ?: 'Lokasi camping yang menawan dengan pemandangan alam yang indah' }}</p>
+                            <div style="margin-top: 1rem;">
+                                <span style="color: #3A5A40; font-weight: 600;">
+                                    Rp {{ number_format($location->price_per_night, 0, ',', '.') }}/malam
+                                </span>
+                            </div>
                         </div>
-                        <h3>Camping Ground Ngampay</h3>
-                        <p>Lokasi strategis dengan akses mudah dan pemandangan alam yang indah</p>
-                    </div>
-
-                    <div class="location-item">
-                        <div class="location-icon">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.798!2d107.6191!3d-6.9175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNTUnMDMuMCJTIDEwN8KwMzcnMDguOCJF!5e0!3m2!1sen!2sid!4v1234567890124!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    @empty
+                        <div class="location-item">
+                            <div class="location-icon">
+                                <div style="width: 100%; height: 200px; background: #f0f0f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #666;">
+                                    Segera Hadir
+                                </div>
+                            </div>
+                            <h3>Lokasi Akan Segera Tersedia</h3>
+                            <p>Kami sedang mempersiapkan lokasi camping terbaik untuk Anda</p>
                         </div>
-                        <h3>Kampung Stamplat Girang</h3>
-                        <p>Experience camping di desa wisata dengan budaya lokal yang kental</p>
-                    </div>
-
-                    <div class="location-item">
-                        <div class="location-icon">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.798!2d107.6191!3d-6.9175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNTUnMDMuMCJTIDEwN8KwMzcnMDguOCJF!5e0!3m2!1sen!2sid!4v1234567890125!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
-                        <h3>Djamudju Coffee Camp</h3>
-                        <p>Kombinasi camping dan coffee experience dengan cita rasa lokal</p>
-                    </div>
-
-                    <div class="location-item">
-                        <div class="location-icon">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.798!2d107.6191!3d-6.9175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNTUnMDMuMCJTIDEwN8KwMzcnMDguOCJF!5e0!3m2!1sen!2sid!4v1234567890126!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
-                        <h3>Fresh Forest</h3>
-                        <p>Camping di tengah hutan dengan suasana alami dan udara segar</p>
-                    </div>
+                    @endforelse
                 </div>
             </div>
         </section>

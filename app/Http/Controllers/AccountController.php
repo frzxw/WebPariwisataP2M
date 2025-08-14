@@ -12,7 +12,12 @@ use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
-    public function __construct(private UserService $userService) {}
+    private UserService $userService;
+
+    public function __construct(UserService $userService) 
+    {
+        $this->userService = $userService;
+    }
 
     /**
      * Get user profile for web view
@@ -22,20 +27,21 @@ class AccountController extends Controller
         $user = auth()->user();
         
         if (!$user) {
-            return redirect()->route('login');
+            return redirect()->route('web.login');
         }
 
-        // Get user's booking statistics
-        $plotBookings = $user->plotBookings()->count();
+        // Get user's booking statistics 
+        $totalBookings = $user->bookings()->count();
+        $totalSpent = $user->bookings()->where('payment_status', 'paid')->sum('total_amount');
         
-        $bookingStats = [
-            'total_bookings' => $plotBookings,
-            'completed_bookings' => $user->plotBookings()->where('status', 'completed')->count(),
-            'pending_bookings' => $user->plotBookings()->whereIn('status', ['pending', 'confirmed'])->count(),
-            'total_spent' => $user->plotBookings()->where('payment_status', 'paid')->sum('total_amount'),
-        ];
+        // Get recent bookings with facility relationships
+        $recentBookings = $user->bookings()
+            ->with(['facility', 'bookingAddons.equipmentRental'])
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
 
-        return view('account.index', compact('user', 'bookingStats'));
+        return view('account.index', compact('user', 'totalBookings', 'totalSpent', 'recentBookings'));
     }
 
     /**

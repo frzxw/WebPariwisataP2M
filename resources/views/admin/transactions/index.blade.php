@@ -15,15 +15,15 @@
                         <div class="flex items-center flex-1 space-x-4 text-sm">
                             <h5>
                                 <span class="text-gray-500">Semua Transaksi:</span>
-                                <span class="">51</span>
+                                <span class="">{{ number_format($totalBookings) }}</span>
                             </h5>
                             <h5>
                                 <span class="text-gray-500">Total Pendapatan:</span>
-                                <span class="">Rp. 20.000.000</span>
+                                <span class="">Rp. {{ number_format($totalRevenue, 0, ',', '.') }}</span>
                             </h5>
                         </div>
                         <div>
-                            <form class="flex items-center">
+                            <form class="flex items-center" method="GET" action="{{ route('admin.transactions') }}">
                                 <label for="simple-search" class="sr-only">Cari</label>
                                 <div class="relative w-full">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -34,7 +34,7 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="text" id="simple-search"
+                                    <input type="text" id="simple-search" name="search" value="{{ request('search') }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full pl-10 pr-3 py-2"
                                         placeholder="Cari transaksi, pelanggan, kavling...">
                                     <button type="submit"
@@ -553,6 +553,7 @@
                                     <th scope="col" class="px-4 py-3 font-semibold">Order</th>
                                     <th scope="col" class="px-4 py-3 font-semibold">User</th>
                                     <th scope="col" class="px-4 py-3 font-semibold">Status</th>
+                                    <th scope="col" class="px-4 py-3 font-semibold">Total</th>
                                     <th scope="col" class="px-4 py-3 font-semibold">Mulai Sewa</th>
                                     <th scope="col" class="px-4 py-3 font-semibold">Akhir Sewa</th>
                                     <th scope="col" class="px-4 py-3 font-semibold text-center">
@@ -561,107 +562,104 @@
                                 </tr>
                             </thead>
                             <tbody class="text-xs">
-                                <tr class="border-b hover:bg-gray-50 transition-colors duration-150">
-                                    <td class="w-4 px-4 py-3">
-                                        <div class="flex items-center">
-                                            <input id="checkbox-table-search-1" type="checkbox"
-                                                onclick="event.stopPropagation()"
-                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-lime-600 focus:ring-lime-500 focus:ring-2">
-                                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        Sabtu, 26 Jul 2025</td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        Kavling A1</td>
-                                    <th scope="row"
-                                        class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap me-1">
-                                        <img src="https://placehold.co/500x500" class="w-auto h-8 mr-3 rounded-full">
-                                        Dudul Abdul Kasim
-                                    </th>
-                                    <td class="px-4 py-2 whitespace-nowrap">
-                                        {{-- Status: Check In, Check Out, Belum Dibayar, Sudah Dibayar --}}
-                                        <span
-                                            class="uppercase bg-green-100 text-green-800 text-xs font-bold me-2 px-2.5 py-0.5 rounded-sm">Check
-                                            In</span>
-                                        {{-- <span
-                                            class="uppercase bg-red-100 text-red-800 text-xs font-bold me-2 px-2.5 py-0.5 rounded-sm">Check
-                                            Out</span>
-                                        <span
-                                            class="uppercase bg-orange-100 text-orange-800 text-xs font-bold me-2 px-2.5 py-0.5 rounded-sm">Belum
-                                            Dibayar</span>
-                                        <span
-                                            class="uppercase bg-blue-100 text-blue-800 text-xs font-bold me-2 px-2.5 py-0.5 rounded-sm">Sudah
-                                            Dibayar</span> --}}
-                                    </td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        Sabtu, 30 Jul 2025</td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        Sabtu, 1 Agu 2025</td>
-                                    <td class="px-4 py-3 flex items-center justify-center">
-                                        <button id="apple-imac-27-dropdown-button"
-                                            data-dropdown-toggle="apple-imac-27-dropdown"
-                                            class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-150"
-                                            type="button">
-                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                            </svg>
-                                        </button>
-                                        <div id="apple-imac-27-dropdown"
-                                            class="hidden z-10 w-44 bg-white rounded-lg shadow-lg border border-gray-100 divide-y divide-gray-100">
-                                            <ul class="py-1 text-sm text-gray-700"
-                                                aria-labelledby="apple-imac-27-dropdown-button">
-                                                <li>
-                                                    <a href="#" data-modal-target="show-modal"
-                                                        data-modal-toggle="show-modal"
-                                                        class="flex items-center py-2 px-4 hover:bg-gray-100 text-gray-700">
-                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
-                                                            </path>
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                                                            </path>
-                                                        </svg>
-                                                        Detail
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" data-modal-target="edit-modal"
-                                                        data-modal-toggle="edit-modal"
-                                                        class="flex items-center py-2 px-4 hover:bg-gray-100 text-gray-700">
-                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                                                            </path>
-                                                        </svg>
-                                                        Edit
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <div class="py-1">
-                                                <a href="#" data-modal-target="delete-modal"
-                                                    data-modal-toggle="delete-modal"
-                                                    class="flex items-center py-2 px-4 text-sm text-red-600 hover:bg-red-50">
-                                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                                        </path>
-                                                    </svg>
-                                                    Hapus
-                                                </a>
+                                @forelse($bookings as $booking)
+                                    <tr class="border-b hover:bg-gray-50 transition-colors duration-150">
+                                        <td class="w-4 px-4 py-3">
+                                            <div class="flex items-center">
+                                                <input id="checkbox-table-search-{{ $booking->id }}" type="checkbox"
+                                                    onclick="event.stopPropagation()"
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-lime-600 focus:ring-lime-500 focus:ring-2">
+                                                <label for="checkbox-table-search-{{ $booking->id }}" class="sr-only">checkbox</label>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $booking->created_at->format('D, d M Y') }}
+                                        </td>
+                                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $booking->booking_code }}
+                                        </td>
+                                        <th scope="row"
+                                            class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap me-1">
+                                            <img src="{{ $booking->user->profile_picture ? asset('storage/' . $booking->user->profile_picture) : 'https://placehold.co/500x500' }}" 
+                                                 class="w-auto h-8 mr-3 rounded-full">
+                                            {{ $booking->user->name }}
+                                        </th>
+                                        <td class="px-4 py-2 whitespace-nowrap">
+                                            <span class="uppercase text-xs font-bold me-2 px-2.5 py-0.5 rounded-sm
+                                                @if($booking->status === 'confirmed') bg-green-100 text-green-800
+                                                @elseif($booking->status === 'pending') bg-orange-100 text-orange-800
+                                                @elseif($booking->status === 'cancelled') bg-red-100 text-red-800
+                                                @else bg-blue-100 text-blue-800
+                                                @endif">
+                                                {{ ucfirst($booking->status) }}
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                            <span class="font-semibold text-green-600">
+                                                Rp {{ number_format($booking->total_amount, 0, ',', '.') }}
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $booking->check_in_date ? \Carbon\Carbon::parse($booking->check_in_date)->format('D, d M Y') : '-' }}
+                                        </td>
+                                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $booking->check_out_date ? \Carbon\Carbon::parse($booking->check_out_date)->format('D, d M Y') : '-' }}
+                                        </td>
+                                        <td class="px-4 py-3 flex items-center justify-center">
+                                            <button id="booking-{{ $booking->id }}-dropdown-button"
+                                                data-dropdown-toggle="booking-{{ $booking->id }}-dropdown"
+                                                class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-150"
+                                                type="button">
+                                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                                    viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                </svg>
+                                            </button>
+                                            <div id="booking-{{ $booking->id }}-dropdown"
+                                                class="hidden z-10 w-44 bg-white rounded-lg shadow-lg border border-gray-100 divide-y divide-gray-100">
+                                                <ul class="py-1 text-sm text-gray-700"
+                                                    aria-labelledby="booking-{{ $booking->id }}-dropdown-button">
+                                                    <li>
+                                                        <a href="#" onclick="showBookingDetail({{ $booking->id }})"
+                                                            class="flex items-center py-2 px-4 hover:bg-gray-100 text-gray-700">
+                                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
+                                                                viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                                                                </path>
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                                                </path>
+                                                            </svg>
+                                                            Detail
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" onclick="editBooking({{ $booking->id }})"
+                                                            class="flex items-center py-2 px-4 hover:bg-gray-100 text-gray-700">
+                                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
+                                                                viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                                                </path>
+                                                            </svg>
+                                                            Edit Status
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="8" class="px-4 py-8 text-center text-gray-500">
+                                            Tidak ada data transaksi
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -669,56 +667,12 @@
                         aria-label="Table navigation">
                         <span class="text-xs font-normal text-gray-500">
                             Menampilkan
-                            <span class="font-semibold text-gray-900">1-10</span>
+                            <span class="font-semibold text-gray-900">{{ $bookings->firstItem() ?? 0 }}-{{ $bookings->lastItem() ?? 0 }}</span>
                             dari
-                            <span class="font-semibold text-gray-900">1000</span>
+                            <span class="font-semibold text-gray-900">{{ $bookings->total() }}</span>
                         </span>
-                        <ul class="inline-flex items-stretch -space-x-px">
-                            <li>
-                                <a href="#"
-                                    class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
-                                    <span class="sr-only">Sebelumnya</span>
-                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="flex items-center justify-center px-3 py-2 text-xs leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="flex items-center justify-center px-3 py-2 text-xs leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</a>
-                            </li>
-                            <li>
-                                <a href="#" aria-current="page"
-                                    class="z-10 flex items-center justify-center px-3 py-2 text-xs leading-tight border text-lime-600 bg-lime-50 border-lime-300 hover:bg-lime-100 hover:text-lime-700">3</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="flex items-center justify-center px-3 py-2 text-xs leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">...</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="flex items-center justify-center px-3 py-2 text-xs leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">100</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
-                                    <span class="sr-only">Selanjutnya</span>
-                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
+                        
+                        {{ $bookings->appends(request()->query())->links() }}
                     </nav>
                 </div>
             </div>

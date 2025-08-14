@@ -117,20 +117,6 @@ class PaymentLog extends Model
         ]);
     }
 
-    protected function casts(): array
-    {
-        return [
-            'amount' => 'decimal:2',
-            'response_data' => 'array',
-        ];
-    }
-
-    // Relationships
-    public function booking()
-    {
-        return $this->belongsTo(Booking::class);
-    }
-
     // Scopes
     public function scopeSuccess($query)
     {
@@ -140,11 +126,5 @@ class PaymentLog extends Model
     public function scopeFailed($query)
     {
         return $query->where('status', 'failed');
-    }
-
-    // Accessors
-    public function getFormattedAmountAttribute()
-    {
-        return 'Rp ' . number_format($this->amount, 0, ',', '.');
     }
 }

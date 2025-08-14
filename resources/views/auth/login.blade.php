@@ -21,59 +21,9 @@
 <body class="min-h-screen bg-cover bg-center bg-no-repeat font-poppins"
     style="background-image: url('{{ asset('images/background.png') }}');">
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 bg-white bg-opacity-95 backdrop-blur-md px-4 sm:px-8 py-4 z-50 shadow-lg">
-        <nav class="flex justify-between items-center max-w-screen-xl mx-auto">
-            <!-- Mobile menu button -->
-            <button data-drawer-target="mobile-sidebar" data-drawer-toggle="mobile-sidebar"
-                aria-controls="mobile-sidebar" type="button"
-                class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
-                <span class="sr-only">Open main menu</span>
-                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path clip-rule="evenodd" fill-rule="evenodd"
-                        d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
-                    </path>
-                </svg>
-            </button>
+        @include('partials.header')
 
-            <!-- Logo -->
-            <div class="flex items-center">
-                <img src="{{ asset('images/admin/logo-upi.webp') }}" alt="UPI Logo" class="h-8 sm:h-10 w-auto">
-            </div>
-
-            <!-- Desktop Navigation -->
-            <ul class="hidden md:flex list-none gap-8 ml-auto mr-8">
-                <li><a href="{{ url('/') }}"
-                        class="no-underline text-gray-700 transition-colors duration-300 hover:text-green-800">Home</a>
-                </li>
-                <li><a href="{{ url('/about') }}"
-                        class="no-underline text-gray-700 transition-colors duration-300 hover:text-green-800 {{ request()->is('about') ? 'text-green-800' : '' }}">About
-                        Us</a></li>
-                <li><a href="{{ url('/transaction') }}"
-                        class="no-underline text-gray-700 transition-colors duration-300 hover:text-green-800 {{ request()->is('transaction') ? 'text-green-800' : '' }}">Transaksi</a>
-                </li>
-                <li><a href="{{ url('/') }}"
-                        class="no-underline text-gray-700 transition-colors duration-300 hover:text-green-800">Akun</a>
-                </li>
-                <li><a href="{{ url('/booking') }}"
-                        class="px-6 py-2 rounded-full no-underline transition-all duration-300 bg-baseGreen hover:bg-darkGreen text-white hover:transform hover:-translate-y-0.5 hover:shadow-lg {{ request()->is('booking') ? 'text-white' : '' }}">Reservasi</a>
-                </li>
-            </ul>
-
-            <!-- Desktop Auth Button -->
-            <div class="hidden md:flex gap-4">
-                @if (Route::has('login'))
-                    @auth
-                        <a href="{{ url('/dashboard') }}"
-                            class="px-6 py-2 rounded-full no-underline transition-all duration-300 bg-green-700 text-white hover:transform hover:-translate-y-0.5 hover:shadow-lg">Dashboard</a>
-                    @else
-                        <a href="{{ url('/register') }}"
-                            class="px-6 py-2 rounded-full no-underline transition-all duration-300 bg-green-700 text-white hover:transform hover:-translate-y-0.5 hover:shadow-lg">Daftar</a>
-                    @endauth
-                @endif
-            </div>
-        </nav>
-    </header>
+    <!-- Main Content -->
 
     <!-- Mobile Sidebar -->
     <aside id="mobile-sidebar"
@@ -131,21 +81,21 @@
 
             <!-- Mobile Auth Section -->
             <div class="pt-6 mt-6 border-t border-gray-200">
-                @if (Route::has('login'))
+                @if (Route::has('web.login'))
                     @auth
-                        <a href="{{ url('/dashboard') }}"
+                        <a href="{{ route('web.account') }}"
                             class="flex items-center p-3 text-gray-900 rounded-lg hover:bg-gray-100 group">
-                            <span class="ml-1">Dashboard</span>
+                            <span class="ml-1">Akun Saya</span>
                         </a>
                     @else
                         <div class="space-y-3">
-                            <a href="{{ url('/register') }}"
+                            <a href="{{ route('web.register') }}"
                                 class="block w-full text-center px-4 py-2 text-sm font-medium text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300">
                                 Daftar Sekarang
                             </a>
                             <p class="text-sm text-gray-600 text-center">
                                 Sudah punya akun?
-                                <a href="{{ url('/login') }}" class="text-green-600 hover:text-green-800 font-medium">
+                                <a href="{{ route('web.login') }}" class="text-green-600 hover:text-green-800 font-medium">
                                     Masuk di sini
                                 </a>
                             </p>
@@ -160,7 +110,7 @@
     <div data-drawer-backdrop="mobile-sidebar" class="fixed inset-0 z-30 bg-gray-900/50 hidden"></div>
 
     <!-- Main Content -->
-    <main class="font-poppins">
+    <main class="font-poppins pt-20">
         <div class="mx-auto relative px-4">
             <!-- Login Card -->
             <div class="flex items-center justify-center min-h-screen">
@@ -172,7 +122,7 @@
                     </div>
 
                     <!-- Login Form -->
-                    <form method="POST" action="{{ url('/login') }}">
+                    <form method="POST" action="{{ route('web.login.post') }}">
                         @csrf
 
                         <!-- Email Field -->

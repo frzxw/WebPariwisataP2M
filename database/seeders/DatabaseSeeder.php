@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
                 'features' => json_encode(['WiFi', 'Toilet Bersih', 'Parkir Luas', 'Warung', 'Mushola', 'Security 24 Jam']),
                 'contact_info' => json_encode(['phone' => '+6281234567890', 'email' => 'info@nyampay.com']),
                 'operating_hours' => json_encode(['check_in' => '14:00', 'check_out' => '12:00']),
+                'price_per_night' => 150000.00,
                 'is_active' => true,
                 'sort_order' => 1,
             ],
@@ -59,6 +60,7 @@ class DatabaseSeeder extends Seeder
                 'features' => json_encode(['Budaya Lokal', 'Toilet Tradisional', 'Warung Desa', 'Sawah', 'Tracking']),
                 'contact_info' => json_encode(['phone' => '+6281234567891']),
                 'operating_hours' => json_encode(['check_in' => '15:00', 'check_out' => '11:00']),
+                'price_per_night' => 120000.00,
                 'is_active' => true,
                 'sort_order' => 2,
             ],
@@ -72,6 +74,7 @@ class DatabaseSeeder extends Seeder
                 'features' => json_encode(['Coffee Shop', 'Roastery', 'Workshop Kopi', 'Garden', 'Toilet']),
                 'contact_info' => json_encode(['phone' => '+6281234567892', 'email' => 'hello@djamudju.com']),
                 'operating_hours' => json_encode(['check_in' => '14:00', 'check_out' => '12:00']),
+                'price_per_night' => 200000.00,
                 'is_active' => true,
                 'sort_order' => 3,
             ],
@@ -85,13 +88,17 @@ class DatabaseSeeder extends Seeder
                 'features' => json_encode(['Hutan Kopi', 'Organic Farm', 'Trekking Path', 'Bird Watching', 'Natural Spring', 'Eco Toilet']),
                 'contact_info' => json_encode(['phone' => '+6281234567893', 'email' => 'info@coffeeforest.com']),
                 'operating_hours' => json_encode(['check_in' => '13:00', 'check_out' => '11:00']),
+                'price_per_night' => 180000.00,
                 'is_active' => true,
                 'sort_order' => 4,
             ],
         ];
 
         foreach ($locations as $locationData) {
-            CampingLocation::create($locationData);
+            CampingLocation::firstOrCreate(
+                ['slug' => $locationData['slug']], 
+                $locationData
+            );
         }
 
         // Create Camping Plots
@@ -199,7 +206,10 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($plots as $plotData) {
-            CampingPlot::create($plotData);
+            CampingPlot::firstOrCreate(
+                ['location_id' => $plotData['location_id'], 'plot_number' => $plotData['plot_number']], 
+                $plotData
+            );
         }
 
         // Create Equipment Rentals (Add-ons)
@@ -267,7 +277,10 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($equipments as $equipmentData) {
-            EquipmentRental::create($equipmentData);
+            EquipmentRental::firstOrCreate(
+                ['name' => $equipmentData['name']], 
+                $equipmentData
+            );
         }
 
         // Create Sample Plot Bookings
@@ -280,38 +293,42 @@ class DatabaseSeeder extends Seeder
             $checkOutDate = $checkInDate->copy()->addDays(rand(1, 3));
             $nights = $checkInDate->diffInDays($checkOutDate);
             $totalAmount = $plot->price_per_night * $nights;
+            $bookingCode = 'PB' . date('Ymd') . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
             
-            PlotBooking::create([
-                'booking_code' => 'PB' . date('Ymd') . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT),
-                'user_id' => $user->id,
-                'camping_plot_id' => $plot->id,
-                'check_in_date' => $checkInDate->format('Y-m-d'),
-                'check_out_date' => $checkOutDate->format('Y-m-d'),
-                'check_in_name' => $user->name,
-                'check_out_name' => $user->name,
-                'guests_count' => rand(1, $plot->max_capacity),
-                'plot_price' => $totalAmount,
-                'addons_total' => 0,
-                'total_amount' => $totalAmount,
-                'status' => collect(['pending', 'confirmed', 'completed'])->random(),
-                'payment_status' => collect(['pending', 'paid'])->random(),
-                'payment_method' => collect(['bank_transfer', 'credit_card', 'e_wallet'])->random(),
-                'special_requests' => 'Seeded booking for testing',
-            ]);
+            PlotBooking::firstOrCreate(
+                ['booking_code' => $bookingCode],
+                [
+                    'user_id' => $user->id,
+                    'camping_plot_id' => $plot->id,
+                    'check_in_date' => $checkInDate->format('Y-m-d'),
+                    'check_out_date' => $checkOutDate->format('Y-m-d'),
+                    'check_in_name' => $user->name,
+                    'check_out_name' => $user->name,
+                    'guests_count' => rand(1, $plot->max_capacity),
+                    'plot_price' => $totalAmount,
+                    'addons_total' => 0,
+                    'total_amount' => $totalAmount,
+                    'status' => collect(['pending', 'confirmed', 'completed'])->random(),
+                    'payment_status' => collect(['pending', 'paid'])->random(),
+                    'payment_method' => collect(['bank_transfer', 'credit_card', 'e_wallet'])->random(),
+                    'special_requests' => 'Seeded booking for testing',
+                ]
+            );
         }
 
         // Create Sample Reviews for camping locations
         $completedBookings = PlotBooking::where('status', 'completed')->get();
         foreach ($completedBookings as $booking) {
-            Review::create([
-                'user_id' => $booking->user_id,
-                'camping_location_id' => $booking->campingPlot->location_id,
-                'plot_booking_id' => $booking->id,
-                'rating' => rand(4, 5),
-                'comment' => 'Amazing camping experience! The location was beautiful and the facilities were excellent.',
-                'is_approved' => true,
-                'approved_at' => now(),
-            ]);
+            Review::firstOrCreate(
+                ['user_id' => $booking->user_id, 'plot_booking_id' => $booking->id],
+                [
+                    'camping_location_id' => $booking->campingPlot->location_id,
+                    'rating' => rand(4, 5),
+                    'comment' => 'Amazing camping experience! The location was beautiful and the facilities were excellent.',
+                    'is_approved' => true,
+                    'approved_at' => now(),
+                ]
+            );
         }
 
         // Update camping location ratings
@@ -322,6 +339,32 @@ class DatabaseSeeder extends Seeder
             $location->update([
                 'rating' => round($avgRating, 2),
                 'total_reviews' => $totalReviews,
+            ]);
+        }
+
+        // Create Sample Bookings
+        $campingLocations = CampingLocation::all();
+        foreach ($users->take(6) as $user) {
+            $location = $campingLocations->random();
+            $checkInDate = now()->addDays(rand(1, 30));
+            $checkOutDate = $checkInDate->copy()->addDays(rand(1, 3));
+            $nights = $checkInDate->diffInDays($checkOutDate);
+            $totalAmount = $location->price_per_night * $nights;
+            
+            \App\Models\Booking::create([
+                'booking_code' => 'BK' . date('Ymd') . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT),
+                'user_id' => $user->id,
+                'facility_id' => $location->id,
+                'check_in' => $checkInDate,
+                'check_out' => $checkOutDate,
+                'guests' => rand(1, 6),
+                'subtotal' => $totalAmount,
+                'tax_amount' => $totalAmount * 0.1,
+                'total_amount' => $totalAmount * 1.1,
+                'payment_method' => collect(['bank_transfer', 'credit_card', 'e_wallet'])->random(),
+                'payment_status' => collect(['pending', 'paid'])->random(),
+                'booking_status' => collect(['pending', 'confirmed', 'checked_in'])->random(),
+                'special_requests' => 'Sample booking for testing purposes',
             ]);
         }
     }

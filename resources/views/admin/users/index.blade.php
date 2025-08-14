@@ -15,15 +15,15 @@
                         <div class="flex items-center flex-1 space-x-4 text-sm">
                             <h5>
                                 <span class="text-gray-500">Total User:</span>
-                                <span class="">156</span>
+                                <span class="">{{ number_format($totalUsers) }}</span>
                             </h5>
                             <h5>
                                 <span class="text-gray-500">User Aktif:</span>
-                                <span class="">142</span>
+                                <span class="">{{ number_format($activeUsers) }}</span>
                             </h5>
                         </div>
                         <div>
-                            <form class="flex items-center">
+                            <form class="flex items-center" method="GET" action="{{ route('admin.users') }}">
                                 <label for="simple-search" class="sr-only">Cari</label>
                                 <div class="relative w-full">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -34,7 +34,7 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="text" id="simple-search"
+                                    <input type="text" id="simple-search" name="search" value="{{ request('search') }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full pl-10 pr-3 py-2"
                                         placeholder="Cari user berdasarkan nama, email, atau no HP...">
                                     <button type="submit"
@@ -410,270 +410,102 @@
                                 </tr>
                             </thead>
                             <tbody class="text-xs">
-                                <tr class="border-b hover:bg-gray-50 transition-colors duration-150">
-                                    <td class="w-4 px-4 py-3">
-                                        <div class="flex items-center">
-                                            <input id="checkbox-table-search-1" type="checkbox"
-                                                onclick="event.stopPropagation()"
-                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-lime-600 focus:ring-lime-500 focus:ring-2">
-                                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap me-1">
-                                        <img src="https://placehold.co/500x500" class="w-auto h-8 mr-3 rounded-full">
-                                        Ahmad Rizki Pratama
-                                    </th>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        081234567890</td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        ahmad.rizki@email.com</td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        15 Jan 2025</td>
-                                    <td class="px-4 py-2 whitespace-nowrap">
-                                        <span
-                                            class="uppercase bg-blue-100 text-blue-800 text-xs font-bold me-2 px-2.5 py-0.5 rounded-sm">5 Transaksi</span>
-                                    </td>
-                                    <td class="px-4 py-3 flex items-center justify-center">
-                                        <button id="user-1-dropdown-button"
-                                            data-dropdown-toggle="user-1-dropdown"
-                                            class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-150"
-                                            type="button">
-                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                            </svg>
-                                        </button>
-                                        <div id="user-1-dropdown"
-                                            class="hidden z-10 w-44 bg-white rounded-lg shadow-lg border border-gray-100 divide-y divide-gray-100">
-                                            <ul class="py-1 text-sm text-gray-700"
-                                                aria-labelledby="user-1-dropdown-button">
-                                                <li>
-                                                    <a href="#" data-modal-target="show-modal"
-                                                        data-modal-toggle="show-modal"
-                                                        class="flex items-center py-2 px-4 hover:bg-gray-100 text-gray-700">
-                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
-                                                            </path>
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                                                            </path>
-                                                        </svg>
-                                                        Detail
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" data-modal-target="edit-modal"
-                                                        data-modal-toggle="edit-modal"
-                                                        class="flex items-center py-2 px-4 hover:bg-gray-100 text-gray-700">
-                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                                                            </path>
-                                                        </svg>
-                                                        Edit
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <div class="py-1">
-                                                <a href="#" data-modal-target="delete-modal"
-                                                    data-modal-toggle="delete-modal"
-                                                    class="flex items-center py-2 px-4 text-sm text-red-600 hover:bg-red-50">
-                                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                                        </path>
-                                                    </svg>
-                                                    Hapus
-                                                </a>
+                                @forelse($users as $user)
+                                    <tr class="border-b hover:bg-gray-50 transition-colors duration-150">
+                                        <td class="w-4 px-4 py-3">
+                                            <div class="flex items-center">
+                                                <input id="checkbox-table-search-{{ $user->id }}" type="checkbox"
+                                                    onclick="event.stopPropagation()"
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-lime-600 focus:ring-lime-500 focus:ring-2">
+                                                <label for="checkbox-table-search-{{ $user->id }}" class="sr-only">checkbox</label>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="border-b hover:bg-gray-50 transition-colors duration-150">
-                                    <td class="w-4 px-4 py-3">
-                                        <div class="flex items-center">
-                                            <input id="checkbox-table-search-2" type="checkbox"
-                                                onclick="event.stopPropagation()"
-                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-lime-600 focus:ring-lime-500 focus:ring-2">
-                                            <label for="checkbox-table-search-2" class="sr-only">checkbox</label>
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap me-1">
-                                        <img src="https://placehold.co/500x500" class="w-auto h-8 mr-3 rounded-full">
-                                        Siti Nurhaliza
-                                    </th>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        082987654321</td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        siti.nurhaliza@email.com</td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        10 Feb 2025</td>
-                                    <td class="px-4 py-2 whitespace-nowrap">
-                                        <span
-                                            class="uppercase bg-blue-100 text-blue-800 text-xs font-bold me-2 px-2.5 py-0.5 rounded-sm">3 Transaksi</span>
-                                    </td>
-                                    <td class="px-4 py-3 flex items-center justify-center">
-                                        <button id="user-2-dropdown-button"
-                                            data-dropdown-toggle="user-2-dropdown"
-                                            class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-150"
-                                            type="button">
-                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                            </svg>
-                                        </button>
-                                        <div id="user-2-dropdown"
-                                            class="hidden z-10 w-44 bg-white rounded-lg shadow-lg border border-gray-100 divide-y divide-gray-100">
-                                            <ul class="py-1 text-sm text-gray-700"
-                                                aria-labelledby="user-2-dropdown-button">
-                                                <li>
-                                                    <a href="#" data-modal-target="show-modal"
-                                                        data-modal-toggle="show-modal"
-                                                        class="flex items-center py-2 px-4 hover:bg-gray-100 text-gray-700">
-                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
-                                                            </path>
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                                                            </path>
-                                                        </svg>
-                                                        Detail
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" data-modal-target="edit-modal"
-                                                        data-modal-toggle="edit-modal"
-                                                        class="flex items-center py-2 px-4 hover:bg-gray-100 text-gray-700">
-                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                                                            </path>
-                                                        </svg>
-                                                        Edit
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <div class="py-1">
-                                                <a href="#" data-modal-target="delete-modal"
-                                                    data-modal-toggle="delete-modal"
-                                                    class="flex items-center py-2 px-4 text-sm text-red-600 hover:bg-red-50">
-                                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                                        </path>
-                                                    </svg>
-                                                    Hapus
-                                                </a>
+                                        </td>
+                                        <th scope="row"
+                                            class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap me-1">
+                                            <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : 'https://placehold.co/500x500' }}" 
+                                                 class="w-auto h-8 mr-3 rounded-full">
+                                            {{ $user->name }}
+                                            @if($user->role === 'admin')
+                                                <span class="ml-2 px-2 py-1 text-xs bg-orange-100 text-orange-800 rounded-full">Admin</span>
+                                            @endif
+                                        </th>
+                                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $user->phone ?? '-' }}
+                                        </td>
+                                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $user->email }}
+                                        </td>
+                                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $user->created_at->format('d M Y') }}
+                                        </td>
+                                        <td class="px-4 py-2 whitespace-nowrap">
+                                            <span class="uppercase text-xs font-bold me-2 px-2.5 py-0.5 rounded-sm
+                                                @if($user->is_active) bg-green-100 text-green-800
+                                                @else bg-red-100 text-red-800
+                                                @endif">
+                                                {{ $user->is_active ? 'Aktif' : 'Nonaktif' }}
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 flex items-center justify-center">
+                                            <button id="user-{{ $user->id }}-dropdown-button"
+                                                data-dropdown-toggle="user-{{ $user->id }}-dropdown"
+                                                class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-150"
+                                                type="button">
+                                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                                    viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                </svg>
+                                            </button>
+                                            <div id="user-{{ $user->id }}-dropdown"
+                                                class="hidden z-10 w-44 bg-white rounded-lg shadow-lg border border-gray-100 divide-y divide-gray-100">
+                                                <ul class="py-1 text-sm text-gray-700"
+                                                    aria-labelledby="user-{{ $user->id }}-dropdown-button">
+                                                    <li>
+                                                        <a href="#" onclick="showUserDetail({{ $user->id }})"
+                                                            class="flex items-center py-2 px-4 hover:bg-gray-100 text-gray-700">
+                                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
+                                                                viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                                                                </path>
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                                                </path>
+                                                            </svg>
+                                                            Detail
+                                                        </a>
+                                                    </li>
+                                                    @if($user->role !== 'admin')
+                                                        <li>
+                                                            <a href="#" onclick="toggleUserStatus({{ $user->id }})"
+                                                                class="flex items-center py-2 px-4 hover:bg-gray-100 text-gray-700">
+                                                                @if($user->is_active)
+                                                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728"></path>
+                                                                    </svg>
+                                                                    Nonaktifkan
+                                                                @else
+                                                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                                    </svg>
+                                                                    Aktifkan
+                                                                @endif
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="border-b hover:bg-gray-50 transition-colors duration-150">
-                                    <td class="w-4 px-4 py-3">
-                                        <div class="flex items-center">
-                                            <input id="checkbox-table-search-3" type="checkbox"
-                                                onclick="event.stopPropagation()"
-                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-lime-600 focus:ring-lime-500 focus:ring-2">
-                                            <label for="checkbox-table-search-3" class="sr-only">checkbox</label>
-                                        </div>
-                                    </td>
-                                    <th scope="row"
-                                        class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap me-1">
-                                        <img src="https://placehold.co/500x500" class="w-auto h-8 mr-3 rounded-full">
-                                        Budi Santoso
-                                    </th>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        085123456789</td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        budi.santoso@email.com</td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        05 Mar 2025</td>
-                                    <td class="px-4 py-2 whitespace-nowrap">
-                                        <span
-                                            class="uppercase bg-blue-100 text-blue-800 text-xs font-bold me-2 px-2.5 py-0.5 rounded-sm">2 Transaksi</span>
-                                    </td>
-                                    <td class="px-4 py-3 flex items-center justify-center">
-                                        <button id="user-3-dropdown-button"
-                                            data-dropdown-toggle="user-3-dropdown"
-                                            class="inline-flex items-center p-1 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-150"
-                                            type="button">
-                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                            </svg>
-                                        </button>
-                                        <div id="user-3-dropdown"
-                                            class="hidden z-10 w-44 bg-white rounded-lg shadow-lg border border-gray-100 divide-y divide-gray-100">
-                                            <ul class="py-1 text-sm text-gray-700"
-                                                aria-labelledby="user-3-dropdown-button">
-                                                <li>
-                                                    <a href="#" data-modal-target="show-modal"
-                                                        data-modal-toggle="show-modal"
-                                                        class="flex items-center py-2 px-4 hover:bg-gray-100 text-gray-700">
-                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
-                                                            </path>
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                                                            </path>
-                                                        </svg>
-                                                        Detail
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" data-modal-target="edit-modal"
-                                                        data-modal-toggle="edit-modal"
-                                                        class="flex items-center py-2 px-4 hover:bg-gray-100 text-gray-700">
-                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                                                            </path>
-                                                        </svg>
-                                                        Edit
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <div class="py-1">
-                                                <a href="#" data-modal-target="delete-modal"
-                                                    data-modal-toggle="delete-modal"
-                                                    class="flex items-center py-2 px-4 text-sm text-red-600 hover:bg-red-50">
-                                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                                        </path>
-                                                    </svg>
-                                                    Hapus
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="px-4 py-8 text-center text-gray-500">
+                                            Tidak ada data user
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

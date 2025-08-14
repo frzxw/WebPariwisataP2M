@@ -11,33 +11,33 @@ class BookingAddon extends Model
     use HasFactory;
 
     protected $fillable = [
-        'plot_booking_id',
-        'equipment_rental_id', 
+        'booking_id',
+        'addon_type',
+        'addon_id',
         'quantity',
-        'price_per_day',
-        'days',
+        'price_per_unit',
         'total_price',
     ];
 
     protected $casts = [
-        'price_per_day' => 'decimal:2',
+        'price_per_unit' => 'decimal:2',
         'total_price' => 'decimal:2',
     ];
 
     /**
-     * Get the plot booking that owns the addon
+     * Get the booking that owns the addon
      */
-    public function plotBooking(): BelongsTo
+    public function booking(): BelongsTo
     {
-        return $this->belongsTo(PlotBooking::class);
+        return $this->belongsTo(Booking::class);
     }
 
     /**
-     * Get the equipment rental
+     * Get the equipment rental when addon_type is equipment
      */
-    public function equipmentRental(): BelongsTo
+    public function equipment(): BelongsTo
     {
-        return $this->belongsTo(EquipmentRental::class);
+        return $this->belongsTo(EquipmentRental::class, 'addon_id');
     }
 
     /**

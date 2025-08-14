@@ -15,15 +15,15 @@
                         <div class="flex items-center flex-1 space-x-4 text-sm">
                             <h5>
                                 <span class="text-gray-500">Total Item:</span>
-                                <span class="">87</span>
+                                <span class="">{{ number_format($totalItems ?? 0) }}</span>
                             </h5>
                             <h5>
                                 <span class="text-gray-500">Item Tersedia:</span>
-                                <span class="">72</span>
+                                <span class="">{{ number_format($availableItems ?? 0) }}</span>
                             </h5>
                         </div>
                         <div>
-                            <form class="flex items-center">
+                            <form class="flex items-center" method="GET" action="{{ route('admin.items') }}">
                                 <label for="simple-search" class="sr-only">Cari</label>
                                 <div class="relative w-full">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -34,7 +34,7 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="text" id="simple-search"
+                                    <input type="text" id="simple-search" name="search" value="{{ request('search') }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full pl-10 pr-3 py-2"
                                         placeholder="Cari item berdasarkan nama, kategori, atau deskripsi...">
                                     <button type="submit"

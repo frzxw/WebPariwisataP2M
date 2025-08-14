@@ -11,82 +11,71 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto w-full font-poppins">
                 <div class="bg-[#5F8F68] rounded-[20px] text-white px-6 py-8 shadow-lg">
                     <p>Total Transaksi</p>
-                    <span class="text-3xl font-medium">50</span>
+                    <span class="text-3xl font-medium">{{ number_format($totalBookings) }}</span>
                 </div>
                 <div class="bg-[#D69C45] rounded-[20px] text-white px-6 py-8 shadow-lg">
                     <p>Total Pelanggan</p>
-                    <span class="text-3xl font-medium">50</span>
+                    <span class="text-3xl font-medium">{{ number_format($totalUsers) }}</span>
                 </div>
                 <div class="bg-[#729CA1] rounded-[20px] text-white px-6 py-8 shadow-lg">
                     <p>Total Pendapatan</p>
-                    <span class="text-3xl font-medium">Rp50.000.000</span>
+                    <span class="text-3xl font-medium">Rp{{ number_format($totalRevenue, 0, ',', '.') }}</span>
                 </div>
             </div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 font-poppins md:px-8">
-            {{-- Calendar --}}
+            {{-- Recent Bookings --}}
             <div class="bg-white px-4 py-6 rounded-2xl shadow-xl">
-                <p class="font-medium mb-3">Daftar Booking</p>
+                <p class="font-medium mb-3">Booking Terbaru</p>
 
                 <div class="w-full min-h-[230px] max-h-[380px] space-y-3 overflow-auto">
-                    <div class="space-y-1">
-                        <div class="mb-2 px-2">
-                            <p class="text-sm mb-1">Agustus</p>
-                            <hr>
+                    @if($recentBookings->count() > 0)
+                        @php
+                            $groupedBookings = $recentBookings->groupBy(function($booking) {
+                                return $booking->created_at->format('F Y');
+                            });
+                        @endphp
+                        
+                        @foreach($groupedBookings as $monthYear => $bookings)
+                            <div class="space-y-1">
+                                <div class="mb-2 px-2">
+                                    <p class="text-sm mb-1">{{ $monthYear }}</p>
+                                    <hr>
+                                </div>
+                                @foreach($bookings as $booking)
+                                    <div class="bg-[#ECEFEC] rounded-2xl px-6 py-4">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <p class="font-medium">{{ $booking->booking_code }}</p>
+                                                <p class="text-sm">{{ $booking->user->name }}</p>
+                                                <p class="text-[#7D7D7D] text-sm">Dipesan {{ $booking->created_at->format('d F Y') }}</p>
+                                                @if($booking->campingPlot)
+                                                    <p class="text-xs text-gray-500">
+                                                        Plot: {{ $booking->campingPlot->plot_number }}
+                                                    </p>
+                                                @endif
+                                                <p class="text-xs font-semibold text-green-600">
+                                                    Rp {{ number_format($booking->total_amount, 0, ',', '.') }}
+                                                </p>
+                                            </div>
+                                            <span class="px-2 py-1 text-xs rounded-full
+                                                @if($booking->status === 'confirmed') bg-green-100 text-green-800
+                                                @elseif($booking->status === 'pending') bg-yellow-100 text-yellow-800
+                                                @elseif($booking->status === 'cancelled') bg-red-100 text-red-800
+                                                @else bg-blue-100 text-blue-800
+                                                @endif">
+                                                {{ ucfirst($booking->status) }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="text-center py-8">
+                            <p class="text-gray-500">Belum ada booking</p>
                         </div>
-                        <div class="bg-[#ECEFEC] rounded-2xl px-6 py-4">
-                            <p class="font-medium">Kavling A1</p>
-                            <p class="text-sm">Rumi</p>
-                            <p class="text-[#7D7D7D] text-sm">Dipesan tanggal 10 Agustus 2025</p>
-                        </div>
-                        <div class="bg-[#ECEFEC] rounded-2xl px-6 py-4">
-                            <p class="font-medium">Kavling A2</p>
-                            <p class="text-sm">Joey</p>
-                            <p class="text-[#7D7D7D] text-sm">Dipesan tanggal 11 Agustus 2025</p>
-                        </div>
-                    </div>
-                    <div class="space-y-1">
-                        <div class="mb-2 px-2">
-                            <span class="text-sm">September</span>
-                            <hr>
-                        </div>
-                        <div class="bg-[#ECEFEC] rounded-2xl px-6 py-4">
-                            <p class="font-medium">Kavling A1</p>
-                            <p class="text-sm">Rumi</p>
-                            <p class="text-[#7D7D7D] text-sm">Dipesan tanggal 10 September 2025</p>
-                        </div>
-                        <div class="bg-[#ECEFEC] rounded-2xl px-6 py-4">
-                            <p class="font-medium">Kavling A2</p>
-                            <p class="text-sm">Joey</p>
-                            <p class="text-[#7D7D7D] text-sm">Dipesan tanggal 11 September 2025</p>
-                        </div>
-                        <div class="bg-[#ECEFEC] rounded-2xl px-6 py-4">
-                            <p class="font-medium">Kavling B2</p>
-                            <p class="text-sm">Upin</p>
-                            <p class="text-[#7D7D7D] text-sm">Dipesan tanggal 11 September 2025</p>
-                        </div>
-                    </div>
-                    <div class="space-y-1">
-                        <div class="mb-2 px-2">
-                            <span class="text-sm">Desember</span>
-                            <hr>
-                        </div>
-                        <div class="bg-[#ECEFEC] rounded-2xl px-6 py-4">
-                            <p class="font-medium">Kavling A1</p>
-                            <p class="text-sm">Rumi</p>
-                            <p class="text-[#7D7D7D] text-sm">Dipesan tanggal 10 Desember 2025</p>
-                        </div>
-                        <div class="bg-[#ECEFEC] rounded-2xl px-6 py-4">
-                            <p class="font-medium">Kavling A2</p>
-                            <p class="text-sm">Joey</p>
-                            <p class="text-[#7D7D7D] text-sm">Dipesan tanggal 11 Desember 2025</p>
-                        </div>
-                        <div class="bg-[#ECEFEC] rounded-2xl px-6 py-4">
-                            <p class="font-medium">Kavling B2</p>
-                            <p class="text-sm">Upin</p>
-                            <p class="text-[#7D7D7D] text-sm">Dipesan tanggal 11 Desember 2025</p>
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -161,8 +150,16 @@
                     },
                 },
                 series: [{
-                    name: "Total Transaksi",
-                    data: [10, 12, 20, 10, 20, 30],
+                    name: "Pendapatan",
+                    data: [
+                        @if(isset($monthlyRevenue) && $monthlyRevenue->count() > 0)
+                            @foreach($monthlyRevenue as $revenue)
+                                {{ $revenue->revenue }},
+                            @endforeach
+                        @else
+                            0, 0, 0, 0, 0, 0
+                        @endif
+                    ],
                     color: "#65a30d",
                 }],
                 legend: {
@@ -172,7 +169,15 @@
                     curve: 'smooth'
                 },
                 xaxis: {
-                    categories: ['Agu', 'Sep', 'Okt', 'Nov', 'Des', 'Jan'],
+                    categories: [
+                        @if(isset($monthlyRevenue) && $monthlyRevenue->count() > 0)
+                            @foreach($monthlyRevenue as $revenue)
+                                '{{ \Carbon\Carbon::create($revenue->year, $revenue->month)->format('M Y') }}',
+                            @endforeach
+                        @else
+                            'Agu', 'Sep', 'Okt', 'Nov', 'Des', 'Jan'
+                        @endif
+                    ],
                     labels: {
                         show: true,
                         style: {

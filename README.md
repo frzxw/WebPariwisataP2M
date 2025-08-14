@@ -2,7 +2,7 @@
 
 Sistem manajemen pariwisata berbasis web yang dibangun dengan Laravel 11 untuk mengelola transaksi pembayaran kavling wisata, pelanggan, dan dashboard analytics.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Backend:**
 - Laravel 11.31
@@ -20,7 +20,7 @@ Sistem manajemen pariwisata berbasis web yang dibangun dengan Laravel 11 untuk m
 - Node.js 18+
 - NPM/Yarn
 
-## 📋 Persyaratan Sistem
+## Persyaratan Sistem
 
 Pastikan sistem Anda memiliki:
 
@@ -30,7 +30,7 @@ Pastikan sistem Anda memiliki:
 - **Git**
 
 
-## 🚀 Instalasi
+## Instalasi
 
 ### 1. Clone Repository
 ```bash
@@ -50,32 +50,69 @@ npm install
 
 ### 4. Setup Environment
 ```bash
-# Copy file environment
 cp .env.example .env
-
-# Generate application key
 php artisan key:generate
 ```
 
-### 5. Setup Database
+### 5. Setup Database & Seeding
 ```bash
-# Buat file database (jika belum ada)
-
-# Jalankan migrasi
-php artisan migrate
-
-# (Opsional) Jalankan seeder untuk data dummy
-php artisan db:seed
+php artisan migrate:fresh --seed
 ```
 
-### 6. Jalankan di Terminal Berbeda
+### 6. Build Assets
+```bash
+npm run build
+```
+
+### 7. Start Development Server
 ```bash
 php artisan serve
-
-npm run dev
 ```
 
-Aplikasi akan berjalan di: `http://localhost:8000`
+### Default Test Accounts
+Setelah menjalankan seeder, Anda dapat menggunakan akun berikut untuk testing:
+
+**Admin Account:**
+- Email: `admin@example.com`
+- Password: `password`
+
+**Regular Users:**
+- Generated automatically via factory (10 users)
+- Password default: `password` untuk semua user yang di-generate
+
+### Testing Complete Booking Flow
+
+1. **Homepage**: http://127.0.0.1:8000/
+   - Lihat lokasi camping yang tersedia
+   - Klik "Booking" untuk memulai reservasi
+
+2. **Booking Form**: http://127.0.0.1:8000/booking
+   - Pilih tanggal check-in/check-out
+   - Pilih jumlah tamu
+   - Pilih equipment rental (opsional)
+   - Isi informasi kontak
+   - Submit booking
+
+3. **Booking Confirmation**: 
+   - Setelah submit, akan redirect ke halaman konfirmasi
+   - Lihat detail booking dan total pembayaran
+   - Klik "Lanjut ke Pembayaran"
+
+4. **Payment Page**:
+   - Pilih metode pembayaran (Bank Transfer)
+   - Upload bukti pembayaran
+   - Submit pembayaran
+
+5. **Account Management**: http://127.0.0.1:8000/account
+   - **Profil Saya**: Edit informasi profil, ganti password
+   - **Booking Terbaru**: Lihat 5 booking terakhir dengan status
+   - **Statistik**: Total booking dan pengeluaran
+
+6. **Transaction History**: http://127.0.0.1:8000/transaction
+   - Lihat semua riwayat transaksi
+   - Filter berdasarkan status
+   - Aksi untuk setiap booking (bayar, lihat detail)
+
 
 ## Deployment
 

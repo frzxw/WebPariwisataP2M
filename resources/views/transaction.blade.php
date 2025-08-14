@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ringkasan Transaksi</title>
+    <title>Riwayat Transaksi</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -21,26 +21,534 @@
             font-family: 'Figtree', sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #f8f9fa;
+            background: url('{{ asset('images/background.png') }}') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
         }
 
         /* Main Content */
         .main-content {
             margin-top: 80px;
-            padding: 2rem 0;
+            padding: 2rem;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+        }
+
+        .page-header {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            text-align: center;
         }
 
         .page-title {
             font-size: 2rem;
-            color: #333;
-            margin: 2rem 0;
+            color: #3A5A40;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .transaction-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .transaction-item {
+            border: 2px solid #f1f3f4;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .transaction-item:hover {
+            border-color: #3A5A40;
+            box-shadow: 0 4px 12px rgba(58, 90, 64, 0.1);
+        }
+
+        .transaction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .booking-info h3 {
+            font-size: 1.2rem;
+            color: #3A5A40;
+            margin-bottom: 0.25rem;
+        }
+
+        .booking-code {
+            font-size: 0.9rem;
+            color: #666;
+            font-family: monospace;
+            background: #f8f9fa;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .status-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-paid {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-confirmed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .transaction-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .detail-label {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-size: 0.95rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .transaction-addons {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .addon-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .addon-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .addon-item {
+            background: white;
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #333;
+            border: 1px solid #e9ecef;
+        }
+
+        .transaction-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #3A5A40;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2d4530;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #3A5A40;
+            border: 2px solid #3A5A40;
+        }
+
+        .btn-outline:hover {
+            background: #3A5A40;
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .empty-subtitle {
+            margin-bottom: 2rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .transaction-card {
+                padding: 1.5rem;
+            }
+
+            .transaction-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .status-badges {
+                align-items: flex-start;
+                flex-direction: row;
+            }
+
+            .transaction-details {
+                grid-template-columns: 1fr;
+            }
+
+            .transaction-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    @include('partials.header')
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Riwayat Transaksi</h1>
+                <p class="page-subtitle">Kelola dan pantau semua booking Anda</p>
+            </div>
+
+            <!-- Success/Info Messages -->
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('message'))
+                <div class="alert alert-info">
+                    {{ session('message') }}
+                </div>
+            @endif
+
+            <!-- Transactions List -->
+            <div class="transaction-card">
+                @if($bookings->count() > 0)
+                    @foreach($bookings as $booking)
+                        <div class="transaction-item">
+                            <!-- Transaction Header -->
+                            <div class="transaction-header">
+                                <div class="booking-info">
+                                    <h3>{{ $booking->facility->name ?? 'Camping Ground' }}</h3>
+                                    <div class="booking-code">{{ $booking->booking_code }}</div>
+                                </div>
+                                <div class="status-badges">
+                                    <span class="status-badge status-{{ $booking->payment_status }}">
+                                        @if($booking->payment_status === 'pending')
+                                            Menunggu Pembayaran
+                                        @elseif($booking->payment_status === 'paid')
+                                            Lunas
+                                        @else
+                                            {{ ucfirst($booking->payment_status) }}
+                                        @endif
+                                    </span>
+                                    <span class="status-badge status-{{ $booking->booking_status }}">
+                                        @if($booking->booking_status === 'pending')
+                                            Menunggu Konfirmasi
+                                        @elseif($booking->booking_status === 'confirmed')
+                                            Dikonfirmasi
+                                        @else
+                                            {{ ucfirst($booking->booking_status) }}
+                                        @endif
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Transaction Details -->
+                            <div class="transaction-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Check-in</span>
+                                    <span class="detail-value">{{ \Carbon\Carbon::parse($booking->check_in)->format('d M Y, H:i') }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Check-out</span>
+                                    <span class="detail-value">{{ \Carbon\Carbon::parse($booking->check_out)->format('d M Y, H:i') }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Durasi</span>
+                                    <span class="detail-value">{{ \Carbon\Carbon::parse($booking->check_in)->diffInDays(\Carbon\Carbon::parse($booking->check_out)) }} malam</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Peserta</span>
+                                    <span class="detail-value">{{ $booking->guests }} orang</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Total Pembayaran</span>
+                                    <span class="detail-value">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Tanggal Booking</span>
+                                    <span class="detail-value">{{ $booking->created_at->format('d M Y, H:i') }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Add-ons -->
+                            @if($booking->addons->count() > 0)
+                                <div class="transaction-addons">
+                                    <div class="addon-title">Add-Ons / Perlengkapan:</div>
+                                    <div class="addon-list">
+                                        @foreach($booking->addons as $addon)
+                                            <div class="addon-item">
+                                                {{ $addon->equipment->name ?? 'Equipment' }} ({{ $addon->quantity }}x)
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+
+                            <!-- Actions -->
+                            <div class="transaction-actions">
+                                @if($booking->payment_status === 'pending')
+                                    <a href="{{ route('web.booking.payment', $booking->booking_code) }}" class="btn btn-primary">
+                                        Bayar Sekarang
+                                    </a>
+                                @endif
+                                
+                                <a href="{{ route('web.booking.confirmation', $booking->booking_code) }}" class="btn btn-outline">
+                                    Lihat Detail
+                                </a>
+
+                                @if($booking->booking_status === 'confirmed' && $booking->check_out < now())
+                                    <button class="btn btn-secondary" onclick="alert('Fitur review akan segera tersedia')">
+                                        Beri Review
+                                    </button>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+
+                    <!-- Pagination -->
+                    <div style="display: flex; justify-content: center; margin-top: 2rem;">
+                        {{ $bookings->links() }}
+                    </div>
+                @else
+                    <!-- Empty State -->
+                    <div class="empty-state">
+                        <div class="empty-icon">-</div>
+                        <h3 class="empty-title">Belum Ada Transaksi</h3>
+                        <p class="empty-subtitle">Anda belum memiliki riwayat booking. Mari mulai petualangan camping Anda!</p>
+                        <a href="{{ route('web.booking') }}" class="btn btn-primary">Mulai Booking</a>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </main>
+
+    @include('partials.footer')
+</body>
+</html>
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* No Auth Message */
+        .no-auth-message, .no-bookings {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #3A5A40;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2d4532;
+        }
+
+        /* Booking Card */
+        .booking-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .booking-id h3 {
+            color: #3A5A40;
+            margin-bottom: 0.5rem;
+        }
+
+        .booking-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .booking-date {
+            color: #666;
+            font-size: 0.9rem;
         }
 
         /* Order Details Section */
@@ -51,24 +559,15 @@
             margin-bottom: 2rem;
         }
 
-        .order-details {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        .order-details, .order-summary-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
         }
 
-        .order-summary-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .order-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+        .order-details h4, .order-summary-card h4 {
+            margin-bottom: 1rem;
+            color: #3A5A40;
         }
 
         .order-info {
@@ -95,67 +594,28 @@
             color: #333;
         }
 
-        .summary-header {
-            margin-bottom: 1rem;
-        }
-
-        .summary-label {
-            color: #666;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .order-summary {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 1.5rem;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .summary-row.total {
-            border-top: 2px solid #2d5016;
-            padding-top: 1rem;
-            margin-top: 1rem;
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #2d5016;
-        }
-
-        .item-name {
-            color: #666;
-        }
-
-        .item-price {
-            font-weight: 600;
-        }
-
-        /* 3-Column Table Layout for Order Summary */
-        .summary-table-header,
-        .summary-table-row,
-        .summary-table-total {
+        .summary-table-header, .summary-table-row {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 2fr 1fr;
             gap: 1rem;
-            padding: 0.75rem 0;
             align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f1f3f4;
         }
 
         .summary-table-header {
+            font-weight: 600;
+            color: #333;
             border-bottom: 2px solid #e9ecef;
             margin-bottom: 0.5rem;
         }
 
-        .summary-table-row {
-            border-bottom: 1px solid #f1f3f4;
-        }
-
         .summary-table-total {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.75rem 0;
             border-top: 2px solid #2d5016;
             margin-top: 1rem;
             padding-top: 1rem;
@@ -181,129 +641,58 @@
             text-align: right;
         }
 
-        .addon-label {
-            color: #666;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
         .col-name.bold {
             font-weight: bold;
         }
 
+        /* Special Requests */
+        .special-requests {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .special-requests h5 {
+            color: #3A5A40;
+            margin-bottom: 0.5rem;
+        }
+
+        .special-requests p {
+            color: #666;
+            font-style: italic;
+        }
+
         /* Payment Method Section */
         .payment-section {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-        }
-
-        .section-title {
-            font-size: 1.2rem;
-            color: #333;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .payment-method {
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
+            background: #fff3cd;
             border-radius: 10px;
             padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
+            margin-top: 1rem;
         }
 
-        .payment-method:hover {
-            border-color: #2d5016;
-            background: #f0f8f0;
+        .payment-section h4 {
+            color: #856404;
+            margin-bottom: 1rem;
         }
 
-        .payment-method.selected {
-            border-color: #2d5016;
-            background: #f0f8f0;
+        .payment-info {
+            margin-top: 1rem;
         }
 
-        .payment-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            overflow: hidden;
+        .payment-info h5 {
+            color: #856404;
+            margin-bottom: 0.5rem;
         }
 
-        .payment-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .payment-name {
-            font-weight: 600;
+        .payment-info p {
+            margin-bottom: 0.25rem;
             color: #333;
         }
 
-        /* Upload Section */
-        .upload-section {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-        }
-
-        .upload-area {
-            border: 2px dashed #ccc;
-            border-radius: 10px;
-            padding: 2rem;
+        /* Pagination */
+        .pagination-wrapper {
+            margin-top: 2rem;
             text-align: center;
-            background: #f8f9fa;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .upload-area:hover {
-            border-color: #2d5016;
-            background: #f0f8f0;
-        }
-
-        .upload-button {
-            background: #3A5A40;
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border: none;
-            border-radius: 25px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            font-size: 1rem;
-        }
-
-        .upload-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .account-info {
-            background: #e8f5e8;
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            color: #2d5016;
         }
 
         /* Responsive */
@@ -313,17 +702,19 @@
                 gap: 1rem;
             }
 
-            .order-grid {
+            .booking-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .summary-table-header, .summary-table-row, .summary-table-total {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                text-align: left;
             }
 
-            .payment-methods {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .container {
-                padding: 0 1rem;
+            .col-name, .col-price {
+                text-align: left;
             }
         }
     </style>
@@ -333,187 +724,145 @@
 
     <main class="main-content">
         <div class="container">
-            <h1 class="page-title">Detail Pesanan</h1>
+            <h1 class="page-title">Riwayat Transaksi</h1>
 
-            <!-- Order Details Section - Split into two cards -->
-            <div class="order-cards-container">
-                <!-- Booking Information Card -->
-                <div class="order-details">
-                    <div class="order-info">
-                        <div class="info-row">
-                            <span class="info-label">Nama Pemesan (Check in)</span>
-                            <span class="info-value">Yattaqi</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Nama Pemesan (Check Out)</span>
-                            <span class="info-value">Yattaqi</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Mulai Sewa</span>
-                            <span class="info-value">16 Juli 2025, 13:00</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Akhir Sewa</span>
-                            <span class="info-value">16 Juli 2025, 13:00</span>
-                        </div>
-                    </div>
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
                 </div>
+            @endif
 
-                <!-- Order Summary Card -->
-                <div class="order-summary-card">
-                    <!-- Table Header -->
-                    <div class="summary-table-header">
-                        <span class="col-category">Jenis Kavling</span>
-                        <span class="col-name bold">Kavling A</span>
-                        <span class="col-price">1.000.000,00</span>
-                    </div>
-
-                    <!-- Add Ons Items -->
-                    <div class="summary-table-row">
-                        <span class="col-category">Add Ons</span>
-                        <span class="col-name bold">Tenda A x1</span>
-                        <span class="col-price">50.000,00</span>
-                    </div>
-                    <div class="summary-table-row">
-                        <span class="col-category"></span>
-                        <span class="col-name bold">Senter x1</span>
-                        <span class="col-price">20.000,00</span>
-                    </div>
-                    <div class="summary-table-row">
-                        <span class="col-category"></span>
-                        <span class="col-name bold">Jaket x1</span>
-                        <span class="col-price">50.000,00</span>
-                    </div>
-
-                    <!-- Total Row -->
-                    <div class="summary-table-total">
-                        <span class="col-category"></span>
-                        <span class="col-name">Total</span>
-                        <span class="col-price">1.120.000,00</span>
-                    </div>
+            @if (session('error'))
+                <div class="alert alert-error">
+                    {{ session('error') }}
                 </div>
-            </div>
+            @endif
 
-            <!-- Payment Method Section -->
-            <div class="payment-section">
-                <h2 class="section-title">Metode Pembayaran : Cash</h2>
-
-                <div class="account-info">
-                    <strong>Pembayaran Cash:</strong><br>
-                    Silakan bayar langsung di lokasi camping
+            @if(!Auth::check())
+                <div class="no-auth-message">
+                    <h2>Silakan Login</h2>
+                    <p>Anda perlu login untuk melihat riwayat transaksi.</p>
+                    <a href="{{ route('web.login') }}" class="btn btn-primary">Login Sekarang</a>
                 </div>
-
-                <div class="payment-methods">
-                    <div class="payment-method selected" onclick="selectPayment(this)">
-                        <div class="payment-icon">
-                            <img src="{{ asset('images/cash.png') }}" alt="Cash">
+            @elseif($bookings->count() > 0)
+                @foreach($bookings as $booking)
+                    <div class="booking-card">
+                        <div class="booking-header">
+                            <div class="booking-id">
+                                <h3>{{ $booking->booking_code }}</h3>
+                                <span class="booking-status status-{{ $booking->status }}">
+                                    {{ ucfirst($booking->status) }}
+                                </span>
+                            </div>
+                            <div class="booking-date">
+                                {{ $booking->created_at->format('d M Y, H:i') }}
+                            </div>
                         </div>
-                        <div class="payment-name">Cash</div>
-                    </div>
-                    <div class="payment-method" onclick="selectPayment(this)">
-                        <div class="payment-icon">
-                            <img src="{{ asset('images/qris_logo.png') }}" alt="QRIS">
-                        </div>
-                        <div class="payment-name">Qris</div>
-                    </div>
-                    <div class="payment-method" onclick="selectPayment(this)">
-                        <div class="payment-icon">
-                            <img src="{{ asset('images/bni_logo.png') }}" alt="BNI">
-                        </div>
-                        <div class="payment-name">Bank BNI</div>
-                    </div>
-                    <div class="payment-method" onclick="selectPayment(this)">
-                        <div class="payment-icon">
-                            <img src="{{ asset('images/spay_logo.png') }}" alt="ShopeePay">
-                        </div>
-                        <div class="payment-name">Shopeepay</div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Upload Section -->
-            <div class="upload-section">
-                <h2 class="section-title">Upload Bukti Pembayaran</h2>
+                        <div class="order-cards-container">
+                            <!-- Booking Information Card -->
+                            <div class="order-details">
+                                <h4>Informasi Booking</h4>
+                                <div class="order-info">
+                                    <div class="info-row">
+                                        <span class="info-label">Nama Pemesan</span>
+                                        <span class="info-value">{{ $booking->name }}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Email</span>
+                                        <span class="info-value">{{ $booking->email }}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Telepon</span>
+                                        <span class="info-value">{{ $booking->phone }}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Jumlah Peserta</span>
+                                        <span class="info-value">{{ $booking->participants_count }} orang</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Check-in</span>
+                                        <span class="info-value">{{ \Carbon\Carbon::parse($booking->check_in)->format('d M Y') }}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Check-out</span>
+                                        <span class="info-value">{{ \Carbon\Carbon::parse($booking->check_out)->format('d M Y') }}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Durasi</span>
+                                        <span class="info-value">{{ $booking->duration }} hari</span>
+                                    </div>
+                                </div>
+                            </div>
 
-                <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-                    <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="handleFileUpload(this)">
-                    <button class="upload-button">Upload bukti</button>
-                    <p style="margin-top: 1rem; color: #666;">Klik untuk memilih file bukti pembayaran</p>
-                </div>
+                            <!-- Order Summary Card -->
+                            <div class="order-summary-card">
+                                <h4>Ringkasan Pesanan</h4>
+                                
+                                <!-- Location -->
+                                <div class="summary-table-header">
+                                    <span class="col-category">Lokasi</span>
+                                    <span class="col-name bold">{{ $booking->facility->name }}</span>
+                                    <span class="col-price">Rp {{ number_format($booking->subtotal, 0, ',', '.') }}</span>
+                                </div>
 
-                <div id="uploadResult" style="margin-top: 1rem; display: none;">
-                    <div style="padding: 1rem; background: #d4edda; border-radius: 5px; color: #155724;">
-                        File berhasil dipilih: <span id="fileName"></span>
+                                <!-- Equipment Rentals -->
+                                @if($booking->addons && $booking->addons->count() > 0)
+                                    @foreach($booking->addons as $addon)
+                                        <div class="summary-table-row">
+                                            <span class="col-category">Peralatan</span>
+                                            <span class="col-name">{{ $addon->equipment->name }} x{{ $addon->quantity }}</span>
+                                            <span class="col-price">Rp {{ number_format($addon->total_price, 0, ',', '.') }}</span>
+                                        </div>
+                                    @endforeach
+                                @endif
+
+                                <!-- Total -->
+                                <div class="summary-table-total">
+                                    <span class="col-category">Total</span>
+                                    <span class="col-name bold">TOTAL PEMBAYARAN</span>
+                                    <span class="col-price">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</span>
+                                </div>
+
+                                @if($booking->special_requests)
+                                    <div class="special-requests">
+                                        <h5>Permintaan Khusus:</h5>
+                                        <p>{{ $booking->special_requests }}</p>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        @if($booking->status === 'pending')
+                            <div class="payment-section">
+                                <h4>Informasi Pembayaran</h4>
+                                <p>Silakan lakukan pembayaran untuk mengkonfirmasi booking Anda.</p>
+                                <div class="payment-info">
+                                    <h5>Transfer ke:</h5>
+                                    <p><strong>Bank BNI</strong></p>
+                                    <p>No. Rekening: <strong>1406976531</strong></p>
+                                    <p>Atas Nama: <strong>Yattaqi Ahmad Faza</strong></p>
+                                    <p>Jumlah: <strong>Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</strong></p>
+                                </div>
+                            </div>
+                        @endif
                     </div>
+                @endforeach
+
+                <!-- Pagination -->
+                <div class="pagination-wrapper">
+                    {{ $bookings->links() }}
                 </div>
-            </div>
+            @else
+                <div class="no-bookings">
+                    <h2>Belum Ada Transaksi</h2>
+                    <p>Anda belum memiliki riwayat transaksi. Silakan buat booking pertama Anda!</p>
+                    <a href="{{ route('web.booking') }}" class="btn btn-primary">Buat Booking</a>
+                </div>
+            @endif
         </div>
     </main>
 
     @include('partials.footer')
-
-    <script>
-        // Payment method selection
-        function selectPayment(element) {
-            // Remove selected class from all payment methods
-            document.querySelectorAll('.payment-method').forEach(method => {
-                method.classList.remove('selected');
-            });
-
-            // Add selected class to clicked element
-            element.classList.add('selected');
-
-            // Update payment info based on selection
-            const paymentName = element.querySelector('.payment-name').textContent;
-            updatePaymentInfo(paymentName);
-        }
-
-        function updatePaymentInfo(method) {
-            const sectionTitle = document.querySelector('.payment-section .section-title');
-            const accountInfo = document.querySelector('.account-info');
-
-            switch(method) {
-                case 'Bank BNI':
-                    sectionTitle.textContent = 'Metode Pembayaran : BNI (1406976531) An. Yattaqi Ahmad Faza';
-                    accountInfo.innerHTML = `
-                        <strong>Informasi Rekening:</strong><br>
-                        Bank BNI - 1406976531<br>
-                        Atas Nama: Yattaqi Ahmad Faza
-                    `;
-                    break;
-                case 'Cash':
-                    sectionTitle.textContent = 'Metode Pembayaran : Cash';
-                    accountInfo.innerHTML = `
-                        <strong>Pembayaran Cash:</strong><br>
-                        Silakan bayar langsung di lokasi camping
-                    `;
-                    break;
-                case 'Qris':
-                    sectionTitle.textContent = 'Metode Pembayaran : QRIS';
-                    accountInfo.innerHTML = `
-                        <strong>Pembayaran QRIS:</strong><br>
-                        Scan kode QR yang tersedia di lokasi
-                    `;
-                    break;
-                case 'Shopeepay':
-                    sectionTitle.textContent = 'Metode Pembayaran : ShopeePay';
-                    accountInfo.innerHTML = `
-                        <strong>ShopeePay:</strong><br>
-                        Transfer ke nomor: 081234567890<br>
-                        Atas Nama: Yattaqi Ahmad Faza
-                    `;
-                    break;
-            }
-        }
-
-        // File upload handling
-        function handleFileUpload(input) {
-            const file = input.files[0];
-            if (file) {
-                document.getElementById('fileName').textContent = file.name;
-                document.getElementById('uploadResult').style.display = 'block';
-            }
-        }
-    </script>
 </body>
 </html>

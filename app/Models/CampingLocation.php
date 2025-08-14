@@ -22,6 +22,7 @@ class CampingLocation extends Model
         'features',
         'contact_info',
         'operating_hours',
+        'price_per_night',
         'is_active',
         'sort_order',
         'rating',
